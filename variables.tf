@@ -1,6 +1,5 @@
 variable "app_name" {
   description = "Name of application to make provisioning for. Almost all resources, created within resource group will be tagged with this value"
-  default ="Test-App"
 }
 
 /*
