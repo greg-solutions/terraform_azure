@@ -44,6 +44,18 @@ resource "azurerm_subnet" "public_subnet" {
   virtual_network_name = "${azurerm_virtual_network.public_network.name}"
 }
 
+/*
+  A subnet is a range of IP addresses in resource group, where resources can be securely launched. Private subnet is uded for
+  resources that won't be connected to the Internet.
+*/
+resource "azurerm_subnet" "private_subnet" {
+  name = "${lower(format("%s-private-subnet",var.app_name))}"
+  resource_group_name = "${azurerm_resource_group.application_resource_group.name}"
+  address_prefix = "${cidrsubnet(var.cidr, 8, 2)}"
+  virtual_network_name = "${azurerm_virtual_network.private_network.name}"
+}
+
+
 resource "azurerm_network_security_group" "public_nsg" {
   name = "${lower(format("%s-security-group",var.app_name))}"
   resource_group_name = "${azurerm_resource_group.application_resource_group.name}"
@@ -69,15 +81,4 @@ resource "azurerm_network_security_rule" "public_nsr_ssh" {
   destination_port_range = "22"
   source_address_prefix = "*"
   destination_address_prefix = "*"
-}
-
-/*
-  A subnet is a range of IP addresses in resource group, where resources can be securely launched. Private subnet is uded for
-  resources that won't be connected to the Internet.
-*/
-resource "azurerm_subnet" "private_subnet" {
-  name = "${lower(format("%s-private-subnet",var.app_name))}"
-  resource_group_name = "${azurerm_resource_group.application_resource_group.name}"
-  address_prefix = "${cidrsubnet(var.cidr, 8, 2)}"
-  virtual_network_name = "${azurerm_virtual_network.private_network.name}"
 }
