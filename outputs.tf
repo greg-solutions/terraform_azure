@@ -7,14 +7,14 @@ output "public_subnet_id" {
   value = "${azurerm_subnet.public_subnet.id}"
 }
 
-output "resource_group_name" {
+output "name" {
   value = "${azurerm_resource_group.application_resource_group.name}"
 }
 
-output "resource_group_location" {
+output "location" {
   value = "${azurerm_resource_group.application_resource_group.location}"
 }
 
-output "resource_group_id" {
+output "id" {
   value = "${azurerm_resource_group.application_resource_group.id}"
 }
